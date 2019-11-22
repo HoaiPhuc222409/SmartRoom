@@ -57,6 +57,8 @@ public class LoginFragment extends Fragment {
         btnLogin.setOnClickListener(v->{
             if (username.getText().length()==0||password.getText().length()==0){
                 Toast.makeText(getContext(), "Not Invalid", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Don't have Sever", Toast.LENGTH_SHORT).show();
             }
         });
         return view;
