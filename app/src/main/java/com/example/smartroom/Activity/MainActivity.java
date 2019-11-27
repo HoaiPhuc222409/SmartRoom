@@ -1,4 +1,4 @@
-package com.example.smartroom;
+package com.example.smartroom.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -6,8 +6,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.view.SurfaceControl;
-import android.widget.TextView;
+
+import com.example.smartroom.Fragment.LoginFragment;
+import com.example.smartroom.R;
 
 public class MainActivity extends AppCompatActivity {
 

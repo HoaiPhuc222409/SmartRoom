@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="#0D0124"
     android:layout_height="match_parent"
-    tools:context=".RegisterFragment">
+    tools:context=".Fragment.RegisterFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -82,22 +82,31 @@
                     android:background="@drawable/boder_login"
                     android:textColorHint="@android:color/white"
                     android:padding="10dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvHintDateOfBirth"
+                    android:text="@string/format_dob"
+                    android:textSize="10sp"
+                    android:visibility="invisible"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@android:color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <EditText
                     android:id="@+id/edtEmail"
-                    android:hint="@string/email"
-                    android:textColor="@android:color/white"
-                    android:inputType="textEmailAddress"
-                    android:imeOptions="actionNext"
-                    android:background="@drawable/boder_login"
-                    android:textColorHint="@android:color/white"
-                    android:padding="10dp"
-                    android:layout_marginBottom="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/boder_login"
+                    android:hint="@string/email"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
 
                 <EditText
                     android:id="@+id/edtPhone"

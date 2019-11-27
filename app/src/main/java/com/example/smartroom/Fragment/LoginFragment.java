@@ -1,4 +1,4 @@
-package com.example.smartroom;
+package com.example.smartroom.Fragment;
 
 
 import android.os.Bundle;
@@ -15,13 +15,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.example.smartroom.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements View.OnClickListener{
 
     TextView register;
     EditText username, password;
@@ -39,29 +39,39 @@ public class LoginFragment extends Fragment {
 
         View view=LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_login, container, false);
 
-        //
+        initialize(view);
+
+        return view;
+    }
+
+    public void initialize(View view){
         register=view.findViewById(R.id.tvCreateAccount);
         username=view.findViewById(R.id.edtUsername);
         password=view.findViewById(R.id.edtPassword);
         btnLogin=view.findViewById(R.id.btnLogin);
 
-
-        register.setOnClickListener(v->{
-            FragmentManager manager=getFragmentManager();
-            FragmentTransaction transaction=manager.beginTransaction();
-            Fragment fragment=new RegisterFragment();
-            transaction.replace(R.id.frameMain,fragment);
-            transaction.commit();
-        });
-
-        btnLogin.setOnClickListener(v->{
-            if (username.getText().length()==0||password.getText().length()==0){
-                Toast.makeText(getContext(), "Not Invalid", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getContext(), "Don't have Sever", Toast.LENGTH_SHORT).show();
-            }
-        });
-        return view;
+        //addOnClickListener
+        btnLogin.setOnClickListener(this);
+        register.setOnClickListener(this);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnLogin:{
+                if (username.getText().length()==0||password.getText().length()==0){
+                    Toast.makeText(getContext(), "Not Invalid", Toast.LENGTH_SHORT).show();
+                } else {
+
+                }
+            }
+            case R.id.tvCreateAccount:{
+                FragmentManager manager=getFragmentManager();
+                FragmentTransaction transaction=manager.beginTransaction();
+                Fragment fragment=new RegisterFragment();
+                transaction.replace(R.id.frameMain,fragment);
+                transaction.commit();
+            }
+        }
+    }
 }
