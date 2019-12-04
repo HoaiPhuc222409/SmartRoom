@@ -2,7 +2,6 @@ package com.example.smartroom.Fragment;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -23,14 +22,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.smartroom.Activity.MainActivity;
 import com.example.smartroom.R;
 import com.example.smartroom.api.APIRetrofit;
-import com.example.smartroom.api.APISignIn;
 import com.example.smartroom.api.APISignUp;
 import com.example.smartroom.model.ResponseSignUpBody;
-import com.example.smartroom.model.Token;
-import com.example.smartroom.service.LoginRequest;
 import com.example.smartroom.service.SignupRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -113,7 +108,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
                     if (edtPassword.getText().toString().length() >= 6) {
                         if (edtPassword.getText().toString().equals(edtConfirmPassword.getText().toString())) {
                             if (checkFill(edtBirthday) && checkFill(edtUserName) && checkFill(edtPassword) && checkFill(edtConfirmPassword) && checkFill(edtFullName) && checkFill(edtEmail) && checkFill(edtPhone)) {
-                                signUp(fullName, username, password, birthday, phone, email);
+//                                signUp(fullName, username, password, birthday, phone, email);
                             } else {
                                 Toast.makeText(getContext(), "All field must be fill", Toast.LENGTH_SHORT).show();
                             }
