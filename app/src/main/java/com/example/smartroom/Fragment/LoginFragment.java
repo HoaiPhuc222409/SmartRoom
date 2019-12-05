@@ -1,6 +1,7 @@
 package com.example.smartroom.Fragment;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -42,6 +43,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     TextView register;
     EditText edtUsername, edtPassword;
     Button btnLogin;
+    ProgressDialog pd;
 
 
     public LoginFragment() {
@@ -66,6 +68,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         edtPassword =view.findViewById(R.id.edtPassword);
         btnLogin=view.findViewById(R.id.btnLogin);
 
+        pd=new ProgressDialog(getContext());
+
         //addOnClickListener
         btnLogin.setOnClickListener(this);
         register.setOnClickListener(this);
@@ -75,13 +79,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnLogin:{
+                pd.setMessage("Loading");
+                pd.show();
                 if (edtUsername.getText().length()==0|| edtPassword.getText().length()==0){
                     Toast.makeText(getContext(), "Not Invalid", Toast.LENGTH_SHORT).show();
-                };
-                String username = edtUsername.getText().toString();
-                String password = edtPassword.getText().toString();
-                getToken(username,password);
-
+                    pd.dismiss();
+                }else {
+                    String username = edtUsername.getText().toString();
+                    String password = edtPassword.getText().toString();
+                    getToken(username,password);
+                }
                 break;
             }
             case R.id.tvCreateAccount:{
@@ -109,9 +116,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             public void onResponse(Call<Token> call, Response<Token> response) {
                 Token token = response.body();
                 if (token != null) {
+                    pd.dismiss();
                     Intent intent=new Intent(getContext(),MainActivity.class);
                     startActivity(intent);
                 } else {
+                    pd.dismiss();
                     Toast.makeText(getContext(), "Login Fail!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -119,6 +128,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             public void onFailure(Call<Token> call, Throwable t) {
 
                 Log.i("tag","login fail");
+                pd.dismiss();
 
             }
         });
