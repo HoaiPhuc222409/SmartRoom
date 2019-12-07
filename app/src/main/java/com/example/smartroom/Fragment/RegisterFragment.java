@@ -85,6 +85,31 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
         btnRegister.setOnClickListener(this);
         edtBirthday.setOnTouchListener(this);
         edtConfirmPassword.setOnTouchListener(this);
+
+        //confirm password
+
+        edtConfirmPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (edtPassword.getText().toString().equals(edtConfirmPassword.getText().toString())) {
+                    edtPassword.setBackgroundResource(R.drawable.boder_match);
+                    edtConfirmPassword.setBackgroundResource(R.drawable.boder_match);
+                } else {
+                    edtConfirmPassword.setBackgroundResource(R.drawable.boder_not_match);
+                    edtPassword.setBackgroundResource(R.drawable.boder_not_match);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -108,7 +133,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
                     if (edtPassword.getText().toString().length() >= 6) {
                         if (edtPassword.getText().toString().equals(edtConfirmPassword.getText().toString())) {
                             if (checkFill(edtBirthday) && checkFill(edtUserName) && checkFill(edtPassword) && checkFill(edtConfirmPassword) && checkFill(edtFullName) && checkFill(edtEmail) && checkFill(edtPhone)) {
-//                                signUp(fullName, username, password, birthday, phone, email);
+                                signUp(fullName, username, password, birthday, phone, email);
                             } else {
                                 Toast.makeText(getContext(), "All field must be fill", Toast.LENGTH_SHORT).show();
                             }
@@ -146,32 +171,22 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
                 edtConfirmPassword.requestFocus();
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(edtConfirmPassword, InputMethodManager.SHOW_IMPLICIT);
-                edtConfirmPassword.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (edtPassword.getText().toString().equals(edtConfirmPassword.getText().toString())) {
-                            edtPassword.setBackgroundResource(R.drawable.boder_match);
-                            edtConfirmPassword.setBackgroundResource(R.drawable.boder_match);
-                        } else {
-                            edtConfirmPassword.setBackgroundResource(R.drawable.boder_not_match);
-                            edtPassword.setBackgroundResource(R.drawable.boder_not_match);
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
                 break;
             }
+            case R.id.tvLogin:{
+                showFragmentLogin();
+            }
+
         }
         return true;
+    }
+
+    public void showFragmentLogin(){
+        FragmentManager manager=getFragmentManager();
+        FragmentTransaction transaction=manager.beginTransaction();
+        Fragment fragment=new LoginFragment();
+        transaction.replace(R.id.frameLogin,fragment);
+        transaction.commit();
     }
 
     public void signUp(String fullName, String username, String password, String birthday, String phone, String email) {
@@ -186,18 +201,19 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
         call.enqueue(new Callback<ResponseSignUpBody>() {
             @Override
             public void onResponse(Call<ResponseSignUpBody> call, Response<ResponseSignUpBody> response) {
-                ResponseSignUpBody token = response.body();
-                if (token != null) {
-                    Toast.makeText(getContext(), "success", Toast.LENGTH_SHORT).show();
+                ResponseSignUpBody responseSignUpBody = response.body();
+                if (responseSignUpBody.getSuccess()){
+                    Toast.makeText(getContext(), "Register success!", Toast.LENGTH_SHORT).show();
+                    showFragmentLogin();
                 } else {
-                    Toast.makeText(getContext(), "Login Fail!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), ""+responseSignUpBody.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseSignUpBody> call, Throwable t) {
 
-                Log.i("tag", "login fail");
+                Log.i("tag", "fail");
 
             }
         });

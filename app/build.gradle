@@ -50,8 +50,4 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.6.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
 
-    implementation 'org.apache.httpcomponents:httpcore:4.4.12'
-    implementation 'org.apache.httpcomponents:httpclient:4.5.10'
-
-    implementation 'com.android.volley:volley:1.1.1'
 }

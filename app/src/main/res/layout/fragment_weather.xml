@@ -9,9 +9,33 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/ln_1"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:background="@drawable/bg_toolbar"
+            android:layout_height="50dp">
+            <ImageView
+                android:layout_marginStart="10dp"
+                android:id="@+id/btnBackWeather"
+                android:layout_width="30dp"
+                android:src="@drawable/ic_back"
+                android:layout_height="50dp"/>
+
+            <TextView
+                android:id="@+id/tvTemp"
+                android:text="Weather"
+                android:textSize="20sp"
+                android:layout_marginEnd="30dp"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
         <EditText
             android:id="@+id/edtNumberOfProduct"
             android:hint="Number of product!"
+            android:layout_below="@+id/ln_1"
             android:background="@drawable/boder_login"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
@@ -23,7 +47,7 @@
 
         <Button
             android:layout_below="@+id/edtNumberOfProduct"
-            android:id="@+id/btnGetTemp"
+            android:id="@+id/btnGetWeather"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
             android:text="Get Data Weather"

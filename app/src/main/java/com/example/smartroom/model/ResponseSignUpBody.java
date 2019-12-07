@@ -1,16 +1,16 @@
 package com.example.smartroom.model;
 
 public class ResponseSignUpBody {
-    private Boolean success;
+    private boolean success;
     private String message;
 
 
-    public ResponseSignUpBody(Boolean success, String message) {
+    public ResponseSignUpBody(boolean success, String message) {
         this.success=success;
         this.message = message;
     }
 
-    public Boolean getSuccess() {
+    public boolean getSuccess() {
         return success;
     }
 
