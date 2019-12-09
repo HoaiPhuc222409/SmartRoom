@@ -4,6 +4,9 @@ public class Token {
     private String accessToken;
     private String tokenType;
 
+    public Token() {
+    }
+
     public Token(String accessToken, String tokenType) {
         this.accessToken = accessToken;
         this.tokenType = tokenType;

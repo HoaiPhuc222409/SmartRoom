@@ -39,25 +39,18 @@ public class WeatherFragment extends Fragment implements View.OnClickListener{
         back=view.findViewById(R.id.btnBackWeather);
         btn_getData=view.findViewById(R.id.btnGetLight);
 
-//        back.setOnClickListener(this);
-//        btn_getData.setOnClickListener(this);
+        back.setOnClickListener(this);
     }
 
-
-
-    public void showMainFragment(){
-        FragmentManager manager=getFragmentManager();
-        FragmentTransaction transaction=manager.beginTransaction();
-        Fragment fragment=new MainFragment();
-        transaction.replace(R.id.framMain,fragment);
-        transaction.commit();
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnBackWeather:{
-//                showMainFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                fragmentManager.popBackStack();
+                transaction.commit();
                 break;
             }
             case R.id.btnGetWeather:{

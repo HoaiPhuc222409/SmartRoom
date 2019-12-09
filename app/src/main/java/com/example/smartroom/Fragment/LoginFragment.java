@@ -3,6 +3,7 @@ package com.example.smartroom.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -34,6 +35,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,6 +47,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     EditText edtUsername, edtPassword;
     Button btnLogin;
     ProgressDialog pd;
+
+    private final String SharedReferencesFile = "sharedReferencesFile";
 
 
     public LoginFragment() {
@@ -80,6 +85,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()){
             case R.id.btnLogin:{
                 pd.setMessage("Loading");
+                onPause();
                 pd.show();
                 if (edtUsername.getText().length()==0|| edtPassword.getText().length()==0){
                     Toast.makeText(getContext(), "Not Invalid", Toast.LENGTH_SHORT).show();
@@ -119,6 +125,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     pd.dismiss();
                     Intent intent=new Intent(getContext(),MainActivity.class);
                     startActivity(intent);
+                    saveToken(token);
                 } else {
                     pd.dismiss();
                     Toast.makeText(getContext(), "Login Fail!", Toast.LENGTH_SHORT).show();
@@ -132,5 +139,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
             }
         });
+    }
+
+    private void saveToken(Token token){
+        SharedPreferences preferences = getContext().getSharedPreferences(SharedReferencesFile, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("token", token.getTokenType() + token.getAccessToken());
+        editor.apply();
     }
 }

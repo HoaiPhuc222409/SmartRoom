@@ -1,6 +1,7 @@
 package com.example.smartroom.Fragment;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -50,6 +51,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
     private Pattern pattern;
     private String birthday, fullName, username, password, email, phone;
     private APISignUp apiSignUp;
+    private ProgressDialog pd;
 
 
     public RegisterFragment() {
@@ -79,6 +81,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
         edtFullName = view.findViewById(R.id.edtFullName);
         edtEmail = view.findViewById(R.id.edtEmail);
         edtPhone = view.findViewById(R.id.edtPhone);
+
+        pd=new ProgressDialog(getContext());
 
         //addOnClickListener
         tvLogin.setOnClickListener(this);
@@ -123,6 +127,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
                 transaction.commit();
             }
             case R.id.btnRegister: {
+                pd.setMessage("Registering");
                 fullName = edtFullName.getText().toString();
                 username = edtUserName.getText().toString();
                 password = edtPassword.getText().toString();
@@ -190,6 +195,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void signUp(String fullName, String username, String password, String birthday, String phone, String email) {
+        pd.show();
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(APIRetrofit.URL)
@@ -203,18 +209,19 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
             public void onResponse(Call<ResponseSignUpBody> call, Response<ResponseSignUpBody> response) {
                 ResponseSignUpBody responseSignUpBody = response.body();
                 if (responseSignUpBody.getSuccess()){
+                    pd.dismiss();
                     Toast.makeText(getContext(), "Register success!", Toast.LENGTH_SHORT).show();
                     showFragmentLogin();
                 } else {
+                    pd.dismiss();
                     Toast.makeText(getContext(), ""+responseSignUpBody.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseSignUpBody> call, Throwable t) {
-
-                Log.i("tag", "fail");
-
+                pd.dismiss();
+                Toast.makeText(getContext(), "Check your connection!", Toast.LENGTH_SHORT).show();
             }
         });
     }

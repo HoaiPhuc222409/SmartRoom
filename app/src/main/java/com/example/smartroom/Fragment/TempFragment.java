@@ -41,8 +41,7 @@ public class TempFragment extends Fragment implements View.OnClickListener{
         back=view.findViewById(R.id.btnBackTemp);
         btn_getData=view.findViewById(R.id.btnGetLight);
 
-//        back.setOnClickListener(this);
-//        btn_getData.setOnClickListener(this);
+        back.setOnClickListener(this);
     }
 
 
@@ -52,7 +51,10 @@ public class TempFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnBackTemp:{
-//                showMainFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                fragmentManager.popBackStack();
+                transaction.commit();
                 break;
             }
             case R.id.btnGetTemp:{

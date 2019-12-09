@@ -89,6 +89,14 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"/>
             </LinearLayout>
+            <Button
+                android:id="@+id/btn_logOut"
+                android:text="log out"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                android:background="@drawable/boder_transparent_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
     </RelativeLayout>
