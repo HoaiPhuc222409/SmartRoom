@@ -92,6 +92,29 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
         //confirm password
 
+        edtPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (edtPassword.getText().toString().equals(edtConfirmPassword.getText().toString())) {
+                    edtPassword.setBackgroundResource(R.drawable.boder_match);
+                    edtConfirmPassword.setBackgroundResource(R.drawable.boder_match);
+                } else {
+                    edtConfirmPassword.setBackgroundResource(R.drawable.boder_not_match);
+                    edtPassword.setBackgroundResource(R.drawable.boder_not_match);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         edtConfirmPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
