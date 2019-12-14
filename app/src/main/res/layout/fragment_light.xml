@@ -35,6 +35,7 @@
         <EditText
             android:id="@+id/edtNumberOfProduct"
             android:layout_below="@+id/ln_1"
+            android:textColor="@android:color/white"
             android:hint="Number of product!"
             android:background="@drawable/boder_login"
             android:layout_marginStart="10dp"
@@ -57,6 +58,14 @@
             android:background="@drawable/boder_button"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rclProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnGetLight"
+            android:layout_marginTop="10dp"
+            android:padding="10dp" />
     </RelativeLayout>
 
 </FrameLayout>

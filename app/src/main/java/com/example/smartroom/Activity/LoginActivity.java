@@ -15,10 +15,6 @@ import com.example.smartroom.model.Token;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Token token = new Token();
-
-
-
     @Override
     protected void onPause() {
         super.onPause();

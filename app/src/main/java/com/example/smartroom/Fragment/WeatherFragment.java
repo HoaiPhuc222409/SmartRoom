@@ -1,19 +1,39 @@
 package com.example.smartroom.Fragment;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.smartroom.Adapter.AdapterData;
 import com.example.smartroom.R;
+import com.example.smartroom.api.APIRetrofit;
+import com.example.smartroom.model.Product;
+import com.example.smartroom.service.ProductService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +41,14 @@ import com.example.smartroom.R;
 public class WeatherFragment extends Fragment implements View.OnClickListener{
     ImageView back;
     Button btn_getData;
+    EditText edtProductNumber;
+
+    ProductService productService;
+    RecyclerView weatherRecyclerView;
+    AdapterData adapterData;
+
+    public final String valueName="HUMIDITY";
+    public static final String SharedReferencesFile = "sharedReferencesFile";
 
     public WeatherFragment() {
         // Required empty public constructor
@@ -37,8 +65,14 @@ public class WeatherFragment extends Fragment implements View.OnClickListener{
 
     public void initialize(View view){
         back=view.findViewById(R.id.btnBackWeather);
-        btn_getData=view.findViewById(R.id.btnGetLight);
+        btn_getData=view.findViewById(R.id.btnGetWeather);
+        weatherRecyclerView=view.findViewById(R.id.rclProduct);
+        edtProductNumber=view.findViewById(R.id.edtNumberOfProduct);
 
+        adapterData=new AdapterData(new ArrayList<Product>(),getContext());
+        weatherRecyclerView.setAdapter(adapterData);
+        weatherRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        btn_getData.setOnClickListener(this);
         back.setOnClickListener(this);
     }
 
@@ -54,8 +88,40 @@ public class WeatherFragment extends Fragment implements View.OnClickListener{
                 break;
             }
             case R.id.btnGetWeather:{
+                String numberProduct = edtProductNumber.getText().toString();
+                SharedPreferences sharedPreferences=getContext().getSharedPreferences(SharedReferencesFile, Context.MODE_PRIVATE);
+                String token=sharedPreferences.getString("token","");
+                getDataWeather(token,valueName,numberProduct);
                 break;
             }
         }
+    }
+
+    public void getDataWeather(String token, String valueName, String numberProduct) {
+        Gson gson = new GsonBuilder().setLenient().create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIRetrofit.URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        productService = retrofit.create(ProductService.class);
+
+        Call<ArrayList<Product>> call = productService.getProducts(token, valueName, numberProduct);
+        call.enqueue(new Callback<ArrayList<Product>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Product>> call, Response<ArrayList<Product>> response) {
+                ArrayList<Product> products=new ArrayList<>();
+                products = response.body();
+                if (products!=null){
+                    adapterData.updateList(products);
+                    adapterData.notifyDataSetChanged();
+                }
+                Log.i("inbody",response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Product>> call, Throwable t) {
+                Log.i("loi",""+t.toString());
+            }
+        });
     }
 }

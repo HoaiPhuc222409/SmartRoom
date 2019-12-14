@@ -11,9 +11,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import com.example.smartroom.Fragment.MainFragment;
 import com.example.smartroom.R;
-import com.example.smartroom.service.LogOut;
 
-public class MainActivity extends AppCompatActivity implements LogOut{
+public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,20 +27,5 @@ public class MainActivity extends AppCompatActivity implements LogOut{
         Fragment fragment=new MainFragment();
         transaction.replace(R.id.framMain,fragment);
         transaction.commit();
-    }
-
-    public void clearData(String nameFile) {
-        SharedPreferences sharedPreferences = getSharedPreferences(nameFile, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
-    }
-
-    @Override
-    public void onLogOut(String nameFile) {
-        SharedPreferences sharedPreferences=getSharedPreferences(nameFile,MODE_PRIVATE);
-        SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.clear();
-        editor.commit();
     }
 }

@@ -17,7 +17,6 @@ import android.widget.ImageView;
 
 import com.example.smartroom.Activity.LoginActivity;
 import com.example.smartroom.R;
-import com.example.smartroom.service.LogOut;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -31,7 +30,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     ImageView img_temp, img_weather, img_people, img_light;
     Button btn_logout;
-    LogOut logOut;
 
     private final String SharedReferencesFile = "sharedReferencesFile";
 
@@ -80,41 +78,42 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void showTempFragment(){
-        FragmentManager manager=getFragmentManager();
-        FragmentTransaction transaction=manager.beginTransaction().addToBackStack("TempFragment");
-        Fragment fragment=new TempFragment();
-        transaction.replace(R.id.framMain,fragment);
+    public void showTempFragment() {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction().addToBackStack("TempFragment");
+        Fragment fragment = new TempFragment();
+        transaction.replace(R.id.framMain, fragment);
         transaction.commit();
     }
 
-    public void showWeatherFragment(){
-        FragmentManager manager=getFragmentManager();
-        FragmentTransaction transaction=manager.beginTransaction().addToBackStack("WeatherFragment");
-        Fragment fragment=new WeatherFragment();
-        transaction.replace(R.id.framMain,fragment);
+    public void showWeatherFragment() {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction().addToBackStack("WeatherFragment");
+        Fragment fragment = new WeatherFragment();
+        transaction.replace(R.id.framMain, fragment);
         transaction.commit();
     }
 
-    public void showPeopleFragment(){
-        FragmentManager manager=getFragmentManager();
-        FragmentTransaction transaction=manager.beginTransaction().addToBackStack("PeopleFragment");
-        Fragment fragment=new PeopleFragment();
-        transaction.replace(R.id.framMain,fragment);
+    public void showPeopleFragment() {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction().addToBackStack("PeopleFragment");
+        Fragment fragment = new PeopleFragment();
+        transaction.replace(R.id.framMain, fragment);
         transaction.commit();
     }
 
-    public void showLightFragment(){
-        FragmentManager manager=getFragmentManager();
-        FragmentTransaction transaction=manager.beginTransaction().addToBackStack("LightFragment");
-        Fragment fragment=new LightFragment();
-        transaction.replace(R.id.framMain,fragment);
+    public void showLightFragment() {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction().addToBackStack("LightFragment");
+        Fragment fragment = new LightFragment();
+        transaction.replace(R.id.framMain, fragment);
         transaction.commit();
     }
-        private void onLogOut(String nameFile){
-            SharedPreferences sharedPreferences=getContext().getSharedPreferences(nameFile,MODE_PRIVATE);
-            SharedPreferences.Editor editor=sharedPreferences.edit();
-            editor.clear();
-            editor.apply();
-        }
+
+    private void onLogOut(String nameFile) {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(nameFile, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+    }
 }

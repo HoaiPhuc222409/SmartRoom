@@ -144,7 +144,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private void saveToken(Token token){
         SharedPreferences preferences = getContext().getSharedPreferences(SharedReferencesFile, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("token", token.getTokenType() + token.getAccessToken());
+        editor.putString("token", token.getTokenType() +" "+ token.getAccessToken());
         editor.apply();
     }
 }
